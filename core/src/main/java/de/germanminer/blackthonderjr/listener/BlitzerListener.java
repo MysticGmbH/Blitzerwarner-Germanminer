@@ -50,11 +50,15 @@ public class BlitzerListener {
         if (optionalParts.isPresent()) {
           String[] parts = optionalParts.get();
           if(player.getVehicle() != null){
-            this.addon.displayMessage(buildWarnMessage(addon.configuration().distanz().get(), Integer.valueOf(parts[4]), parts[3].replace("_", " "), Integer.parseInt(parts[0]) + " " + Integer.parseInt(parts[1]) + " " + Integer.parseInt(parts[2])));
+            if(this.addon.configuration().text().get()){
+              this.addon.displayMessage(buildWarnMessage(addon.configuration().distanz().get(), Integer.valueOf(parts[4]), parts[3].replace("_", " "), Integer.parseInt(parts[0]) + " " + Integer.parseInt(parts[1]) + " " + Integer.parseInt(parts[2])));
+            }
             if (this.addon.configuration().sound().get()) {
               labyAPI.minecraft().sounds()
                   .playSound(ResourceLocation.create("minecraft", "block.note.bell"), 1f,
                       addon.configuration().lautstaerke().get());
+            }
+            if(this.addon.configuration().screen().get()){
               Title title = new Title(Component.text(this.addon.configuration().title().get().toString().replace("&","§") + "Blitzer in Reichweite"),
                   Component.text(this.addon.configuration().subtitleColor().get().toString().replace("&","§") + "§6Geschwindigkeit: " + Integer.valueOf(parts[4]) + " km/h"), 10, 50, 10);
               labyAPI.minecraft().showTitle(title);

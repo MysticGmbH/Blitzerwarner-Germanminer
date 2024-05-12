@@ -6,7 +6,7 @@
         "name": "Addon Aktiviert"
       },
       "sound": {
-        "name": "Blitzer Sound"
+        "name": "Sound"
       },
       "lautstaerke": {
         "name": "Alarmtonlage"
@@ -23,6 +23,9 @@
         },
         "Keybinds": {
           "name": "Hotkeys"
+        },
+        "Benachrichtigungstyp": {
+          "name": "Benachrichtigungstyp"
         }
       },
       "toggleBind": {
@@ -36,6 +39,12 @@
       },
       "subtitleColor": {
         "name": "Untertitelfarbe"
+      },
+      "text": {
+        "name": "Text"
+      },
+      "screen": {
+        "name": "Bildschirm"
       }
     }
   }
