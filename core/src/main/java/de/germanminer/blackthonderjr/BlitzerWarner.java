@@ -3,7 +3,6 @@ package de.germanminer.blackthonderjr;
 import de.germanminer.blackthonderjr.listener.BlitzerKeys;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
-import de.germanminer.blackthonderjr.commands.DebugIsInRangeCommand;
 import de.germanminer.blackthonderjr.listener.BlitzerListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
 
     this.registerListener(new BlitzerListener(this));
     this.registerListener(new BlitzerKeys(this));
-    this.registerCommand(new DebugIsInRangeCommand());
 
     this.logger().info(prefix + "Enabled the Addon");
     BlitzerListener.isInRange = false;
