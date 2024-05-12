@@ -52,4 +52,10 @@ public class BlitzerConfiguration extends AddonConfig {
   public ConfigProperty<String> prefix(){
     return this.prefix;
   }
+  public ConfigProperty<String> title(){
+    return this.title;
+  }
+  public ConfigProperty<String> subtitleColor(){
+    return this.subtitleColor;
+  }
 }

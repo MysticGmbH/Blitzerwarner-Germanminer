@@ -27,6 +27,15 @@
       },
       "toggleBind": {
         "name": "Blitzer Umschalter"
+      },
+      "prefix":{
+        "name": "Prefix"
+      },
+      "title": {
+        "name": "Maintitelfarbe"
+      },
+      "subtitleColor": {
+        "name": "Untertitelfarbe"
       }
     }
   }

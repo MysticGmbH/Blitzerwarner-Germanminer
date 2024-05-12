@@ -53,8 +53,8 @@ public class BlitzerListener {
               labyAPI.minecraft().sounds()
                   .playSound(ResourceLocation.create("minecraft", "block.note.bell"), 1f,
                       addon.configuration().lautstaerke().get());
-              Title title = new Title(Component.text("§4Blitzer in Reichweite"),
-                  Component.text("§6Geschwindigkeit: " + Integer.valueOf(parts[4]) + " km/h"), 10, 50, 10);
+              Title title = new Title(Component.text(this.addon.configuration().title().get().toString().replace("&","§") + "Blitzer in Reichweite"),
+                  Component.text(this.addon.configuration().subtitleColor().get().toString().replace("&","§") + "§6Geschwindigkeit: " + Integer.valueOf(parts[4]) + " km/h"), 10, 50, 10);
               labyAPI.minecraft().showTitle(title);
             }
             hasWarned = true;

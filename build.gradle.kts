@@ -13,7 +13,7 @@ labyMod {
         namespace = "blitzerwarner"
         displayName = "Blitzer Warner Germanminer"
         author = "BlackThonder_Jr/AndreChan2008"
-        description = "Dies ist ein Addon fuer Germanminer was im Umkreis von 100 Blöcken einen Blitzer Meldet."
+        description = "Dieses Addon wurde speziell für den Server GermanMiner.DE entwickelt. Es bietet einen Blitzer-Warner für den Server GermanMiner.de. Sie können nahezu alle Einstellungen selbst konfigurieren und anpassen, genau nach Ihren Bedürfnissen. Das Addon informiert Sie im Chat, mit Sound und einer großflächigen Bildschirmeinblendung, sobald Sie sich in der Nähe eines Blitzers befinden."
         minecraftVersion = "1.12.2"
         version = System.getenv().getOrDefault("VERSION", "0.0.1")
     }
