@@ -30,7 +30,6 @@ public class BlitzerListener {
   }
   @Subscribe
   public void onGameTick(ClientPlayerTurnEvent event) {
-    prefix = this.addon.configuration().prefix().get().toString().replace("&", "§") + " ";
     LabyAPI labyAPI = this.addon.labyAPI();
     if (labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("germanminer.de") || labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("mc.germanminer.de") || labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("localhost")) {
       ClientPlayer player = labyAPI.minecraft().getClientPlayer();

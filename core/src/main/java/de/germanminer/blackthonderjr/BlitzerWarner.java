@@ -18,8 +18,6 @@ public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
 
     this.registerListener(new BlitzerListener(this));
     this.registerListener(new BlitzerKeys(this));
-
-    this.logger().info(prefix + "Enabled the Addon");
     BlitzerListener.isInRange = false;
 
     Koords.add("-1927 73 -1383 Hensburg 50");
