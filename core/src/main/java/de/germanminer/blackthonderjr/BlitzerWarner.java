@@ -14,7 +14,6 @@ public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
 
   @Override
   protected void enable() {
-    prefix = configuration().prefix().get().toString().replace("&", "§") + " ";
     this.registerSettingCategory();
 
     this.registerListener(new BlitzerListener(this));

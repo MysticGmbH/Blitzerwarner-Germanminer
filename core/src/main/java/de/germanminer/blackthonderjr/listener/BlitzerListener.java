@@ -16,6 +16,7 @@ public class BlitzerListener {
   private final BlitzerWarner addon;
   public static boolean isInRange;
   private boolean hasWarned = false;
+  public static String prefix;
 
   public BlitzerListener(BlitzerWarner addon) {
     this.addon = addon;
@@ -25,6 +26,7 @@ public class BlitzerListener {
   public void onGameTick(ServerJoinEvent event) {
     if(event.serverData().address().toString().equalsIgnoreCase("mc.germanminer.de") || event.serverData().address().toString().equalsIgnoreCase("germanminer.de") || event.serverData().address().toString().equalsIgnoreCase("localhost")){
       this.addon.displayMessage(BlitzerWarner.prefix + "§7ist §2Aktiviert!");
+      prefix = this.addon.configuration().prefix().get().toString().replace("&", "§") + " ";
     }
   }
   @Subscribe
@@ -84,7 +86,7 @@ public class BlitzerListener {
 
 
   public static String buildWarnMessage(Integer Reichweite, Integer Geschwindigkeit, String Gebiet, String GenaueKoords){
-    String message = BlitzerWarner.prefix + "§7Blitzer in Reichweite von §2" + Reichweite +" Blöcken.\n§7Koordinaten: §2" + GenaueKoords + "\n§7Gebiet: §2" + Gebiet +"\n§7Geschwindigkeit: §2" + Geschwindigkeit + " KM/H";
+    String message = prefix + "§7Blitzer in Reichweite von §2" + Reichweite +" Blöcken.\n§7Koordinaten: §2" + GenaueKoords + "\n§7Gebiet: §2" + Gebiet +"\n§7Geschwindigkeit: §2" + Geschwindigkeit + " KM/H";
     return message;
   }
 
