@@ -23,14 +23,14 @@ public class BlitzerListener {
   }
 
   @Subscribe
-  public void onGameTick(ServerJoinEvent event) {
+  public void onGameJoin(ServerJoinEvent event) {
     if(event.serverData().address().toString().equalsIgnoreCase("mc.germanminer.de") || event.serverData().address().toString().equalsIgnoreCase("germanminer.de") || event.serverData().address().toString().equalsIgnoreCase("localhost")){
       this.addon.displayMessage(BlitzerWarner.prefix + "§7ist §2Aktiviert!");
-      prefix = this.addon.configuration().prefix().get().toString().replace("&", "§") + " ";
     }
   }
   @Subscribe
   public void onGameTick(ClientPlayerTurnEvent event) {
+    prefix = this.addon.configuration().prefix().get().toString().replace("&", "§") + " ";
     LabyAPI labyAPI = this.addon.labyAPI();
     if (labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("germanminer.de") || labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("mc.germanminer.de") || labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("localhost")) {
       ClientPlayer player = labyAPI.minecraft().getClientPlayer();
