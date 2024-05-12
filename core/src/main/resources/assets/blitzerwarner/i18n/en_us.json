@@ -1,0 +1,33 @@
+{
+  "blitzerwarner": {
+    "settings": {
+      "name": "Blitzerwarner",
+      "enabled": {
+        "name": "Addon Aktiviert"
+      },
+      "sound": {
+        "name": "Blitzer Sound"
+      },
+      "lautstaerke": {
+        "name": "Alarmtonlage"
+      },
+      "distanz": {
+        "name": "Meldungsdistanz"
+      },
+      "header": {
+        "Addon": {
+          "name": "Addon Einstellungen"
+        },
+        "Ingame": {
+          "name": "Ingame Einstellungen"
+        },
+        "Keybinds": {
+          "name": "Hotkeys"
+        }
+      },
+      "toggleBind": {
+        "name": "Blitzer Umschalter"
+      }
+    }
+  }
+}
