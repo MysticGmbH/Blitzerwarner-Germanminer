@@ -16,17 +16,10 @@ public class BlitzerListener {
   private final BlitzerWarner addon;
   public static boolean isInRange;
   private boolean hasWarned = false;
-  public static String prefix;
+  public static String prefix = BlitzerWarner.prefix;
 
   public BlitzerListener(BlitzerWarner addon) {
     this.addon = addon;
-  }
-
-  @Subscribe
-  public void onGameJoin(ServerJoinEvent event) {
-    if(event.serverData().address().toString().equalsIgnoreCase("mc.germanminer.de") || event.serverData().address().toString().equalsIgnoreCase("germanminer.de") || event.serverData().address().toString().equalsIgnoreCase("localhost")){
-      this.addon.displayMessage(BlitzerWarner.prefix + "§7ist §2Aktiviert!");
-    }
   }
   @Subscribe
   public void onGameTick(ClientPlayerTurnEvent event) {
