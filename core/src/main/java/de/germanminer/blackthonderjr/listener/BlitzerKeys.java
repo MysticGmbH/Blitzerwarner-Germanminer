@@ -16,10 +16,10 @@ public class BlitzerKeys {
     if(!Laby.labyAPI().minecraft().minecraftWindow().isScreenOpened()){
       if(e.state().name().equalsIgnoreCase("PRESS")){
         if(e.key().getTranslationKey().equalsIgnoreCase(this.addon.configuration().toggleBind().get().getTranslationKey())){
-          String soundStatus = this.addon.configuration().sound().get().toString();
-          String message = BlitzerWarner.prefix + "§7Der Sound ist " + (soundStatus.equals("true") ? "§4Deaktiviert" : "§aAktiviert");
+          String soundStatus = this.addon.configuration().all().get().toString();
+          String message = BlitzerWarner.prefix + "§7Die Benachrichtigungen wurden" + (soundStatus.equals("true") ? "§4Deaktiviert!" : "§aAktiviert!");
           this.addon.displayMessage(message);
-          this.addon.configuration().sound().set(!this.addon.configuration().sound().get());
+          this.addon.configuration().all().set(!this.addon.configuration().all().get());
         }
       }
     }

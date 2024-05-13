@@ -8,7 +8,6 @@ import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.entity.player.ClientPlayerTurnEvent;
-import net.labymod.api.event.client.network.server.ServerJoinEvent;
 import java.util.Optional;
 
 public class BlitzerListener {
@@ -24,6 +23,9 @@ public class BlitzerListener {
   @Subscribe
   public void onGameTick(ClientPlayerTurnEvent event) {
     LabyAPI labyAPI = this.addon.labyAPI();
+    if(labyAPI.minecraft().isSingleplayer()){
+      return;
+    }
     if (labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("germanminer.de") || labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("mc.germanminer.de") || labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("localhost")) {
       ClientPlayer player = labyAPI.minecraft().getClientPlayer();
       if(player == null){
@@ -42,18 +44,27 @@ public class BlitzerListener {
         if (optionalParts.isPresent()) {
           String[] parts = optionalParts.get();
           if(player.getVehicle() != null){
-            if(this.addon.configuration().text().get()){
-              this.addon.displayMessage(buildWarnMessage(addon.configuration().distanz().get(), Integer.valueOf(parts[4]), parts[3].replace("_", " "), Integer.parseInt(parts[0]) + " " + Integer.parseInt(parts[1]) + " " + Integer.parseInt(parts[2])));
-            }
-            if (this.addon.configuration().sound().get()) {
-              labyAPI.minecraft().sounds()
-                  .playSound(ResourceLocation.create("minecraft", "block.note.bell"), 1f,
-                      addon.configuration().lautstaerke().get());
-            }
-            if(this.addon.configuration().screen().get()){
-              Title title = new Title(Component.text(this.addon.configuration().title().get().toString().replace("&","§") + "Blitzer in Reichweite"),
-                  Component.text(this.addon.configuration().subtitleColor().get().toString().replace("&","§") + "§6Geschwindigkeit: " + Integer.valueOf(parts[4]) + " km/h"), 10, 50, 10);
-              labyAPI.minecraft().showTitle(title);
+            if(addon.configuration().all().get()) {
+              if (this.addon.configuration().text().get()) {
+                this.addon.displayMessage(buildWarnMessage(addon.configuration().distanz().get(),
+                    Integer.valueOf(parts[4]), parts[3].replace("_", " "),
+                    Integer.parseInt(parts[0]) + " " + Integer.parseInt(parts[1]) + " "
+                        + Integer.parseInt(parts[2])));
+              }
+              if (this.addon.configuration().sound().get()) {
+                labyAPI.minecraft().sounds()
+                    .playSound(ResourceLocation.create("minecraft", "block.note.bell"), 1f,
+                        addon.configuration().lautstaerke().get());
+              }
+              if (this.addon.configuration().screen().get()) {
+                Title title = new Title(Component.text(
+                    this.addon.configuration().title().get().toString().replace("&", "§")
+                        + "Blitzer in Reichweite"),
+                    Component.text(this.addon.configuration().subtitleColor().get().toString()
+                        .replace("&", "§") + "§6Geschwindigkeit: " + Integer.valueOf(parts[4])
+                        + " km/h"), 10, 50, 10);
+                labyAPI.minecraft().showTitle(title);
+              }
             }
             hasWarned = true;
           }else{

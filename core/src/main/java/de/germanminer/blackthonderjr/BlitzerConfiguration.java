@@ -29,12 +29,13 @@ public class BlitzerConfiguration extends AddonConfig {
   private final ConfigProperty<Key> toggleBind = new ConfigProperty(Key.R);
 
   @SwitchSetting @SettingSection("Benachrichtigungstyp")
+  private final ConfigProperty<Boolean> all = new ConfigProperty<>(true);
+  @SwitchSetting
   private final ConfigProperty<Boolean> sound = new ConfigProperty<>(true);
   @SwitchSetting
   private final ConfigProperty<Boolean> text = new ConfigProperty<>(true);
   @SwitchSetting
   private final ConfigProperty<Boolean> screen = new ConfigProperty<>(true);
-
   @Override
   public ConfigProperty<Boolean> enabled() {
     return this.enabled;
@@ -70,5 +71,8 @@ public class BlitzerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> text() {
     return this.text;
+  }
+  public ConfigProperty<Boolean> all(){
+    return this.all;
   }
 }

@@ -5,12 +5,14 @@ import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import de.germanminer.blackthonderjr.listener.BlitzerListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @AddonMain
 public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
   public static String prefix;
   public static List<String> Koords = new ArrayList<>();
+  public static HashMap<String, Boolean> blitzerconf = new HashMap<>();
 
   @Override
   protected void enable() {

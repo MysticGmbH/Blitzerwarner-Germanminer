@@ -45,6 +45,9 @@
       },
       "screen": {
         "name": "Bildschirm"
+      },
+      "all": {
+        "name": "Alle Benachrichtigungen"
       }
     }
   }
