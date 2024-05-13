@@ -23,6 +23,7 @@ public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
 
     Koords.add("-1927 73 -1383 Hensburg 50");
     Koords.add("-2137 65 -1437 Hensburg-Westend(Tunnel) 50");
+    Koords.add("-607 67 -2268 Versicherungsviertel 70");
     Koords.add("-2437 66 -2197 Westend(Flughafen) 30");
     Koords.add("-1597 67 -1670 JVA_Spegelsbach(Autovermietung) 50");
     Koords.add("-787 67 -1388 Künstler_Viertel(Kreuzung) 50");
