@@ -17,7 +17,7 @@ public class BlitzerKeys {
       if(e.state().name().equalsIgnoreCase("PRESS")){
         if(e.key().getTranslationKey().equalsIgnoreCase(this.addon.configuration().toggleBind().get().getTranslationKey())){
           String soundStatus = this.addon.configuration().all().get().toString();
-          String message = BlitzerWarner.prefix + "§7Die Benachrichtigungen wurden" + (soundStatus.equals("true") ? "§4Deaktiviert!" : "§aAktiviert!");
+          String message = BlitzerWarner.prefix + "§7Die Benachrichtigungen wurden " + (soundStatus.equals("true") ? "§4Deaktiviert!" : "§aAktiviert!");
           this.addon.displayMessage(message);
           this.addon.configuration().all().set(!this.addon.configuration().all().get());
         }
