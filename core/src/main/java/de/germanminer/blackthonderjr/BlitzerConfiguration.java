@@ -75,4 +75,6 @@ public class BlitzerConfiguration extends AddonConfig {
   public ConfigProperty<Boolean> all(){
     return this.all;
   }
+
+  //TODO: Mehr Hotkeys. Zeit der Anzeige einstellbar.
 }
