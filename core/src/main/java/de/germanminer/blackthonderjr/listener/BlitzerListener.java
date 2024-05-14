@@ -62,7 +62,7 @@ public class BlitzerListener {
                         + "Blitzer in Reichweite"),
                     Component.text(this.addon.configuration().subtitleColor().get().toString()
                         .replace("&", "§") + "§6Geschwindigkeit: " + Integer.valueOf(parts[4])
-                        + " km/h"), 10, 50, 10);
+                        + " km/h"), (int) (20 * addon.configuration().fadeIn().get()), (int) (20 * addon.configuration().stay().get()), (int) (20 * addon.configuration().fadeOut().get()));
                 labyAPI.minecraft().showTitle(title);
               }
             }

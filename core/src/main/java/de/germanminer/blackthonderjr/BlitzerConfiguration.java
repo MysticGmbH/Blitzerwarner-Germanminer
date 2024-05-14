@@ -36,6 +36,15 @@ public class BlitzerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> text = new ConfigProperty<>(true);
   @SwitchSetting
   private final ConfigProperty<Boolean> screen = new ConfigProperty<>(true);
+
+  @SliderSetting(min = 0.5f, max = 10.0f, steps = 0.5f) @SettingSection("Bildschirmbenachrichtigung")
+  private final ConfigProperty<Double> fadeIn = new ConfigProperty<>(0.5);
+
+  @SliderSetting(min = 0.5f, max = 10.0f, steps = 0.5f)
+  private final ConfigProperty<Double> stay = new ConfigProperty<>(2.5);
+
+  @SliderSetting(min = 0.5f, max = 10.0f, steps = 0.5f)
+  private final ConfigProperty<Double> fadeOut = new ConfigProperty<>(0.5);
   @Override
   public ConfigProperty<Boolean> enabled() {
     return this.enabled;
@@ -76,5 +85,13 @@ public class BlitzerConfiguration extends AddonConfig {
     return this.all;
   }
 
-  //TODO: Mehr Hotkeys. Zeit der Anzeige einstellbar.
+  public ConfigProperty<Double> stay() {
+    return this.stay;
+  }
+  public ConfigProperty<Double> fadeIn() {
+    return this.fadeIn;
+  }
+  public ConfigProperty<Double> fadeOut() {
+    return this.fadeOut;
+  }
 }

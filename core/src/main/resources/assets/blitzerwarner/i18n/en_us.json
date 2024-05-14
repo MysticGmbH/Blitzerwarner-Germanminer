@@ -26,6 +26,9 @@
         },
         "Benachrichtigungstyp": {
           "name": "Benachrichtigungstyp"
+        },
+        "Bildschirmbenachrichtigung": {
+          "name": "Bildschirmbenachrichtigung"
         }
       },
       "toggleBind": {
@@ -48,6 +51,15 @@
       },
       "all": {
         "name": "Alle Benachrichtigungen"
+      },
+      "fadeIn": {
+        "name": "Anzeige Einblendungszeit"
+      },
+      "stay": {
+        "name": "Anzeigezeit"
+      },
+      "fadeOut": {
+        "name": "Anzeige Ausblendungszeit"
       }
     }
   }
