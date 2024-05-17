@@ -8,7 +8,9 @@ import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.entity.player.ClientPlayerTurnEvent;
+import net.labymod.api.event.client.network.server.ServerJoinEvent;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 public class BlitzerListener {
 
@@ -19,6 +21,14 @@ public class BlitzerListener {
 
   public BlitzerListener(BlitzerWarner addon) {
     this.addon = addon;
+  }
+  @Subscribe
+  public void onJoin(ServerJoinEvent e){
+    if(e.serverData().address().toString().equalsIgnoreCase("germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("mc.germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("localhost")){
+      BlitzerWarner.Koords.clear();
+      addon.loadBlitzer();
+      addon.displayMessage("");
+    }
   }
   @Subscribe
   public void onGameTick(ClientPlayerTurnEvent event) {

@@ -9,19 +9,16 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @AddonMain
 public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
   public static String prefix;
   public static List<String> Koords = new ArrayList<>();
-  public static HashMap<String, Boolean> blitzerconf = new HashMap<>();
 
   @Override
   protected void enable() {
     prefix = configuration().prefix().get().toString().replace("&", "§") + " ";
-    loadBlitzer();
     this.registerSettingCategory();
 
     this.registerListener(new BlitzerListener(this));
