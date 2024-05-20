@@ -9,10 +9,8 @@ import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.entity.player.ClientPlayerTurnEvent;
 import net.labymod.api.event.client.network.server.ServerJoinEvent;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.concurrent.ExecutionException;
 
 public class BlitzerListener {
 
@@ -20,12 +18,10 @@ public class BlitzerListener {
   public static boolean isInRange;
   private boolean hasWarned = false;
   public static String prefix = BlitzerWarner.prefix;
-  public static ArrayList<String> speeds = new ArrayList<>();
 
   public BlitzerListener(BlitzerWarner addon) {
     this.addon = addon;
   }
-
   @Subscribe
   public void onJoin(ServerJoinEvent e){
     if(e.serverData().address().toString().equalsIgnoreCase("germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("mc.germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("localhost")){
@@ -34,10 +30,8 @@ public class BlitzerListener {
       addon.displayMessage("");
     }
   }
-
   @Subscribe
   public void onGameTick(ClientPlayerTurnEvent event) {
-    speeds.clear();
     LabyAPI labyAPI = this.addon.labyAPI();
     if(labyAPI.minecraft().isSingleplayer()){
       return;
@@ -52,66 +46,51 @@ public class BlitzerListener {
           .anyMatch(parts -> isWithinRadius(player.getPosX(), player.getPosY(), player.getPosZ(), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), addon.configuration().distanz().get()));
 
       if (foundInRange && !isInRange) {
-        List<String[]> allParts = BlitzerWarner.Koords.stream()
+        Optional<String[]> optionalParts = BlitzerWarner.Koords.stream()
             .map(eintrag -> eintrag.split(" "))
             .filter(parts -> isWithinRadius(player.getPosX(), player.getPosY(), player.getPosZ(), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), addon.configuration().distanz().get()))
-            .collect(Collectors.toList());
+            .findFirst();
 
-        for (String[] parts : allParts) {
-          if (player.getVehicle() != null) {
-            if (addon.configuration().all().get()) {
-              if (addon.configuration().text().get()) {
+        if (optionalParts.isPresent()) {
+          String[] parts = optionalParts.get();
+          if(player.getVehicle() != null){
+            if(addon.configuration().all().get()) {
+              if (this.addon.configuration().text().get()) {
                 this.addon.displayMessage(buildWarnMessage(addon.configuration().distanz().get(),
                     Integer.valueOf(parts[4]), parts[3].replace("_", " "),
                     Integer.parseInt(parts[0]) + " " + Integer.parseInt(parts[1]) + " "
                         + Integer.parseInt(parts[2])));
               }
-              if (addon.configuration().sound().get()) {
+              if (this.addon.configuration().sound().get()) {
                 labyAPI.minecraft().sounds()
                     .playSound(ResourceLocation.create("minecraft", "block.note.bell"), 1f,
                         addon.configuration().lautstaerke().get());
               }
-              if(allParts.size() < 2) {
-                if (addon.configuration().screen().get()) {
-                  Title title = new Title(Component.text(
-                      this.addon.configuration().title().get().toString().replace("&", "§")
-                          + "Blitzer in Reichweite"),
-                      Component.text(this.addon.configuration().subtitleColor().get().toString()
-                          .replace("&", "§") + "Geschwindigkeit: " + Integer.valueOf(parts[4])
-                          + " km/h"), (int) (20 * addon.configuration().fadeIn().get()),
-                      (int) (20 * addon.configuration().stay().get()),
-                      (int) (20 * addon.configuration().fadeOut().get()));
-                  labyAPI.minecraft().showTitle(title);
-                }
-              }else{
-                if (addon.configuration().screen().get()) {
-                  Title title = new Title(Component.text(
-                      this.addon.configuration().title().get().toString().replace("&", "§")
-                          + "Mehrere Blitzer in Reichweite"),
-                      Component.text(this.addon.configuration().subtitleColor().get().toString()
-                          .replace("&", "§") + "Geschwindigkeiten: Siehe Chat"),
-                      (int) (20 * addon.configuration().fadeIn().get()),
-                      (int) (20 * addon.configuration().stay().get()),
-                      (int) (20 * addon.configuration().fadeOut().get()));
-                  labyAPI.minecraft().showTitle(title);
-                }
+              if (this.addon.configuration().screen().get()) {
+                Title title = new Title(Component.text(
+                    this.addon.configuration().title().get().toString().replace("&", "§")
+                        + "Blitzer in Reichweite"),
+                    Component.text(this.addon.configuration().subtitleColor().get().toString()
+                        .replace("&", "§") + "§6Geschwindigkeit: " + Integer.valueOf(parts[4])
+                        + " km/h"), (int) (20 * addon.configuration().fadeIn().get()), (int) (20 * addon.configuration().stay().get()), (int) (20 * addon.configuration().fadeOut().get()));
+                labyAPI.minecraft().showTitle(title);
               }
             }
             hasWarned = true;
-          } else {
+          }else{
             hasWarned = false;
             isInRange = false;
           }
         }
-        if (player.getVehicle() != null) {
+        if(player.getVehicle() != null){
           isInRange = true;
-        } else {
+        }else{
           isInRange = false;
         }
       } else if (!foundInRange) {
         isInRange = false;
         hasWarned = false;
-      } else if(isInRange){
+      }else if(isInRange){
         if(player.getVehicle() == null){
           isInRange = false;
         }
@@ -121,9 +100,19 @@ public class BlitzerListener {
     }
   }
 
+
+
   public static String buildWarnMessage(Integer Reichweite, Integer Geschwindigkeit, String Gebiet, String GenaueKoords){
     String message = prefix + "§7Blitzer in Reichweite von §2" + Reichweite +" Blöcken.\n§7Koordinaten: §2" + GenaueKoords + "\n§7Gebiet: §2" + Gebiet +"\n§7Geschwindigkeit: §2" + Geschwindigkeit + " KM/H";
     return message;
+  }
+
+  public boolean isCoords(float x, float y, float z, int isX, int isY, int isZ){
+    if ((int) x == isX && (int) y == isY && (int) z == isZ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public boolean isWithinRadius(float x, float y, float z, float centerX, float centerY, float centerZ, float radius) {
