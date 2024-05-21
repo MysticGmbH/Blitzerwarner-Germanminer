@@ -64,6 +64,23 @@
       "fadeOut": {
         "name": "Anzeige Ausblendungszeit"
       }
+    },
+    "messages": {
+      "text1builder": " Blitzer in Reichweite von ",
+      "text2builder": "%s Blöcken",
+      "text3builder": "\nKoordinaten: ",
+      "text4builder": "\nGebiet: ",
+      "text5builder": "\nGeschwindigkeit: ",
+      "text6builder": "%s",
+      "text7builder": "%s KM/H"
+    },
+    "screen":{
+      "texttitle": "Blitzer in Reichweite",
+      "textsubtitle": "Geschwindigkeit: %s km/h"
+    },
+    "keys": {
+      "message": " Die Benachrichtigungen wurden %s"
     }
+
   }
 }

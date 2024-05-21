@@ -1,16 +1,15 @@
 package de.germanminer.blackthonderjr;
 
 import de.germanminer.blackthonderjr.listener.BlitzerKeys;
+import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import de.germanminer.blackthonderjr.listener.BlitzerListener;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import net.labymod.api.util.io.web.request.Request;
+import net.labymod.api.util.io.web.request.Request.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,20 +37,25 @@ public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
   }
 
   public void loadBlitzer(){
-    try{
-      URL blitzer = new URL("http://awantalife.de/Blitzer.txt");
-
-      URLConnection conBlitzer = blitzer.openConnection();
-      BufferedReader br = new BufferedReader(new InputStreamReader( conBlitzer.getInputStream()));
-      String strLine = "";
-      while ( ( strLine = br.readLine() ) != null)
-        Koords.add(strLine);
-      br.close();
-
-    }
-    catch(Exception ex)
-    {
-      ex.printStackTrace();
-    }
+    Request.ofString()
+        .url("http://awantalife.de/Blitzer.txt")
+        .method(Method.GET)
+        .async()
+        .execute((stringResponse -> {
+          String responseContent = stringResponse.get();
+          if (responseContent != null) {
+            String[] lines = responseContent.split("\n");
+            for (String line : lines) {
+              System.out.println(line);
+              String finalStrLine = line;
+              Laby.labyAPI().minecraft().executeOnRenderThread(() -> {
+                Koords.add(finalStrLine);
+              });
+            }
+          }
+        }));
   }
+
+  // - Use objects instead of strings for the data (maybe load from gson?)
+  // - Use the internationalization system
 }
