@@ -34,8 +34,11 @@
       "toggleBind": {
         "name": "Blitzer Umschalter"
       },
-      "prefix":{
+      "prefixText":{
         "name": "Prefix"
+      },
+      "prefixColor":{
+        "name": "Prefixfarbe"
       },
       "title": {
         "name": "Maintitelfarbe"

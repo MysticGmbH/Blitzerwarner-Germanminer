@@ -23,7 +23,7 @@ public class BlitzerConfiguration extends AddonConfig {
   private final ConfigProperty<Integer> prefixColor = new ConfigProperty<>(
       new Color(4, 255, 235).getRGB());
 
-  @TextFieldSetting
+  @ColorPickerSetting
   private final ConfigProperty<Integer> title = new ConfigProperty<>(
       new Color(255, 0, 0).getRGB());
   @ColorPickerSetting

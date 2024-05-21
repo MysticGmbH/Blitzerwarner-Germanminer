@@ -114,9 +114,8 @@ public class BlitzerListener {
 
 
   public static Component buildWarnMessage(Integer Reichweite, Integer Geschwindigkeit, String Gebiet, String GenaueKoords,BlitzerWarner Addon){
-    return Component.text(Addon.configuration().prefix().get().toString(), TextColor.color(Addon.configuration().prefixColor().get())).decorate(
-        TextDecoration.BOLD)
-        .append(Component.text(" Blitzer in Reichweite von ", NamedTextColor.GRAY)).undecorate(TextDecoration.BOLD)
+    return Component.text(Addon.configuration().prefix().get().toString(), TextColor.color(Addon.configuration().prefixColor().get()))
+        .append(Component.text(" Blitzer in Reichweite von ", NamedTextColor.GRAY))
         .append(Component.text(Reichweite + " Blöcken", NamedTextColor.DARK_GREEN))
         .append(Component.text("\nKoordinaten: ", NamedTextColor.GRAY))
         .append(Component.text(GenaueKoords, NamedTextColor.DARK_GREEN))

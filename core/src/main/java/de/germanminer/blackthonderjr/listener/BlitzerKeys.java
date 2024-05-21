@@ -21,8 +21,7 @@ public class BlitzerKeys {
       if(e.state().name().equalsIgnoreCase("PRESS")){
         if(e.key().getTranslationKey().equalsIgnoreCase(this.addon.configuration().toggleBind().get().getTranslationKey())){
           String soundStatus = this.addon.configuration().all().get().toString();
-          this.addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get())).decorate(
-              TextDecoration.BOLD).append(Component.text(" Die Benachrichtigungen wurden ", NamedTextColor.GRAY)).append(soundStatus.equals("true") ? Component.text("Deaktiviert!",
+          this.addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get())).append(Component.text(" Die Benachrichtigungen wurden ", NamedTextColor.GRAY)).append(soundStatus.equals("true") ? Component.text("Deaktiviert!",
               NamedTextColor.RED) : Component.text("Aktiviert!", NamedTextColor.GREEN)));
           this.addon.configuration().all().set(!this.addon.configuration().all().get());
         }
