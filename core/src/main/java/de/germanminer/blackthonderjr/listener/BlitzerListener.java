@@ -1,5 +1,6 @@
 package de.germanminer.blackthonderjr.listener;
 
+import de.germanminer.blackthonderjr.Blitzer;
 import de.germanminer.blackthonderjr.BlitzerWarner;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
@@ -20,8 +21,6 @@ public class BlitzerListener {
   private final BlitzerWarner addon;
   public static boolean isInRange;
   private boolean hasWarned = false;
-  public static Component prefix = BlitzerWarner.prefix;
-  public static Component message;
 
   public BlitzerListener(BlitzerWarner addon) {
     this.addon = addon;
@@ -53,35 +52,34 @@ public class BlitzerListener {
           return;
         }
         boolean foundInRange = false;
-        for (String eintrag : BlitzerWarner.Koords) {
-          String[] parts = eintrag.split(" ");
+        for (Blitzer blitzer : BlitzerWarner.Koords) {
           if (isWithinRadius(player.getPosX(), player.getPosY(), player.getPosZ(),
-              Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]),
+              blitzer.getX(), blitzer.getY(), blitzer.getZ(),
               addon.configuration().distanz().get())) {
             foundInRange = true;
             break;
           }
         }
 
-        String[] parts = null;
+        Blitzer foundBlitzer = null;
         if (foundInRange && !isInRange) {
-          for (String eintrag : BlitzerWarner.Koords) {
-            String[] tempParts = eintrag.split(" ");
+          for (Blitzer blitzer : BlitzerWarner.Koords) {
             if (isWithinRadius(player.getPosX(), player.getPosY(), player.getPosZ(),
-                Integer.parseInt(tempParts[0]), Integer.parseInt(tempParts[1]),
-                Integer.parseInt(tempParts[2]), addon.configuration().distanz().get())) {
-              parts = tempParts;
+                blitzer.getX(), blitzer.getY(), blitzer.getZ(),
+                addon.configuration().distanz().get())) {
+              foundBlitzer = blitzer;
               break;
             }
           }
-          if (parts != null) {
+          if (foundBlitzer != null) {
             if (player.getVehicle() != null) {
               if (addon.configuration().all().get()) {
                 if (this.addon.configuration().text().get()) {
+                  String loc = foundBlitzer.getX() + " " + foundBlitzer.getY() + " "
+                      + foundBlitzer.getZ();
                   this.addon.displayMessage(buildWarnMessage(addon.configuration().distanz().get(),
-                      Integer.valueOf(parts[4]), parts[3].replace("_", " "),
-                      Integer.parseInt(parts[0]) + " " + Integer.parseInt(parts[1]) + " "
-                          + Integer.parseInt(parts[2]), addon));
+                      foundBlitzer.getGeschwindigkeit(), foundBlitzer.getGebiet(),
+                      loc, addon));
                 }
                 if (this.addon.configuration().sound().get()) {
                   labyAPI.minecraft().sounds()
@@ -90,11 +88,10 @@ public class BlitzerListener {
                 }
                 if (this.addon.configuration().screen().get()) {
                   Title title = new Title(
-                      Component.translatable("blitzerwarner.messages.text1screen",
+                      Component.text("Blitzer in Reichweite",
                       TextColor.color(this.addon.configuration().title().get())),
-                      Component.translatable("blitzerwarner.messages.text2screen",
-                      TextColor.color(this.addon.configuration().subtitleColor().get()),
-                      Component.text(Integer.valueOf(parts[4]))),
+                      Component.text("Geschwindigkeit: " + foundBlitzer.getGeschwindigkeit() +" km/h",
+                      TextColor.color(this.addon.configuration().subtitleColor().get())),
                       (int) (20 * addon.configuration().fadeIn().get()),
                       (int) (20 * addon.configuration().stay().get()),
                       (int) (20 * addon.configuration().fadeOut().get()));
@@ -154,10 +151,3 @@ public class BlitzerListener {
     return distanceSquared <= radiusSquared;
   }
 }
-
-// - Set a boolean on server join/leave if the user is on the server instead of checking it every time  X
-// - Do not use streams
-// - Reformat BlitzerWarner.Koords to contain a Object that holds all the information in different fields
-// - Use the GameTickEvent in either phase PRE or POST instead of ClientPlayerTurnEvent  X
-// - Do not use legacy color codes X
-// - Use Component.translatable (Guidelines #6) X

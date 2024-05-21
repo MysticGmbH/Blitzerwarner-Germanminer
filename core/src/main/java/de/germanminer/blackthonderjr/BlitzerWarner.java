@@ -16,7 +16,7 @@ import java.util.List;
 @AddonMain
 public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
   public static Component prefix;
-  public static List<String> Koords = new ArrayList<>();
+  public static List<Blitzer> Koords = new ArrayList<>();
   public static boolean isOnline;
 
   @Override
@@ -47,15 +47,13 @@ public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
             String[] lines = responseContent.split("\n");
             for (String line : lines) {
               System.out.println(line);
-              String finalStrLine = line;
+              String[] parts = line.split(" ");
+              Blitzer blitzer = new Blitzer(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), parts[3], Integer.parseInt(parts[4]));
               Laby.labyAPI().minecraft().executeOnRenderThread(() -> {
-                Koords.add(finalStrLine);
+                Koords.add(blitzer);
               });
             }
           }
         }));
   }
-
-  // - Use objects instead of strings for the data (maybe load from gson?)
-  // - Use the internationalization system
 }
