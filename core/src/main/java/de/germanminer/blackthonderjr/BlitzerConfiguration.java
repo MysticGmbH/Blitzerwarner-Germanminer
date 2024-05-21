@@ -25,7 +25,7 @@ public class BlitzerConfiguration extends AddonConfig {
 
   @ColorPickerSetting
   private final ConfigProperty<Integer> title = new ConfigProperty<>(
-      new Color(255, 0, 0).getRGB());
+      new Color(168, 0, 0).getRGB());
   @ColorPickerSetting
   private final ConfigProperty<Integer> subtitleColor = new ConfigProperty<>(
       new Color(245, 120, 66).getRGB());

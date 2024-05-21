@@ -81,7 +81,7 @@ public class BlitzerListener {
               if (this.addon.configuration().screen().get()) {
                 Title title = new Title(Component.text("Blitzer in Reichweite", TextColor.color(this.addon.configuration().title().get())),
                     Component.text("Geschwindigkeit: " + Integer.valueOf(parts[4])
-                        + " km/h", TextColor.color(this.addon.configuration().title().get())),
+                        + " km/h", TextColor.color(this.addon.configuration().subtitleColor().get())),
                     (int) (20 * addon.configuration().fadeIn().get()),
                     (int) (20 * addon.configuration().stay().get()),
                     (int) (20 * addon.configuration().fadeOut().get()));
