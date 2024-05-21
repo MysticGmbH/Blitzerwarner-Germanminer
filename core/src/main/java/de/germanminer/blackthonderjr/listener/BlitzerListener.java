@@ -4,20 +4,24 @@ import de.germanminer.blackthonderjr.BlitzerWarner;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.chat.Title;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextColor;
+import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.entity.player.ClientPlayerTurnEvent;
+import net.labymod.api.event.client.lifecycle.GameTickEvent;
+import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 import net.labymod.api.event.client.network.server.ServerJoinEvent;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 public class BlitzerListener {
 
   private final BlitzerWarner addon;
   public static boolean isInRange;
   private boolean hasWarned = false;
-  public static String prefix = BlitzerWarner.prefix;
+  public static Component prefix = BlitzerWarner.prefix;
+  public static Component message;
 
   public BlitzerListener(BlitzerWarner addon) {
     this.addon = addon;
@@ -27,16 +31,24 @@ public class BlitzerListener {
     if(e.serverData().address().toString().equalsIgnoreCase("germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("mc.germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("localhost")){
       BlitzerWarner.Koords.clear();
       addon.loadBlitzer();
-      addon.displayMessage("");
+      BlitzerWarner.isOnline = true;
     }
   }
   @Subscribe
-  public void onGameTick(ClientPlayerTurnEvent event) {
+  public void onDisconnect(ServerDisconnectEvent e){
+    if(e.serverData().address().toString().equalsIgnoreCase("germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("mc.germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("localhost")){
+      BlitzerWarner.Koords.clear();
+      addon.loadBlitzer();
+      BlitzerWarner.isOnline = false;
+    }
+  }
+  @Subscribe
+  public void onGameTick(GameTickEvent event) {
     LabyAPI labyAPI = this.addon.labyAPI();
     if(labyAPI.minecraft().isSingleplayer()){
       return;
     }
-    if (labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("germanminer.de") || labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("mc.germanminer.de") || labyAPI.serverController().getCurrentServerData().address().toString().equalsIgnoreCase("localhost")) {
+    if (BlitzerWarner.isOnline) {
       ClientPlayer player = labyAPI.minecraft().getClientPlayer();
       if(player == null){
         return;
@@ -59,7 +71,7 @@ public class BlitzerListener {
                 this.addon.displayMessage(buildWarnMessage(addon.configuration().distanz().get(),
                     Integer.valueOf(parts[4]), parts[3].replace("_", " "),
                     Integer.parseInt(parts[0]) + " " + Integer.parseInt(parts[1]) + " "
-                        + Integer.parseInt(parts[2])));
+                        + Integer.parseInt(parts[2]), addon));
               }
               if (this.addon.configuration().sound().get()) {
                 labyAPI.minecraft().sounds()
@@ -67,12 +79,12 @@ public class BlitzerListener {
                         addon.configuration().lautstaerke().get());
               }
               if (this.addon.configuration().screen().get()) {
-                Title title = new Title(Component.text(
-                    this.addon.configuration().title().get().toString().replace("&", "§")
-                        + "Blitzer in Reichweite"),
-                    Component.text(this.addon.configuration().subtitleColor().get().toString()
-                        .replace("&", "§") + "§6Geschwindigkeit: " + Integer.valueOf(parts[4])
-                        + " km/h"), (int) (20 * addon.configuration().fadeIn().get()), (int) (20 * addon.configuration().stay().get()), (int) (20 * addon.configuration().fadeOut().get()));
+                Title title = new Title(Component.text("Blitzer in Reichweite", TextColor.color(this.addon.configuration().title().get())),
+                    Component.text("Geschwindigkeit: " + Integer.valueOf(parts[4])
+                        + " km/h", TextColor.color(this.addon.configuration().title().get())),
+                    (int) (20 * addon.configuration().fadeIn().get()),
+                    (int) (20 * addon.configuration().stay().get()),
+                    (int) (20 * addon.configuration().fadeOut().get()));
                 labyAPI.minecraft().showTitle(title);
               }
             }
@@ -96,15 +108,22 @@ public class BlitzerListener {
         }
       }
 
-
     }
   }
 
 
 
-  public static String buildWarnMessage(Integer Reichweite, Integer Geschwindigkeit, String Gebiet, String GenaueKoords){
-    String message = prefix + "§7Blitzer in Reichweite von §2" + Reichweite +" Blöcken.\n§7Koordinaten: §2" + GenaueKoords + "\n§7Gebiet: §2" + Gebiet +"\n§7Geschwindigkeit: §2" + Geschwindigkeit + " KM/H";
-    return message;
+  public static Component buildWarnMessage(Integer Reichweite, Integer Geschwindigkeit, String Gebiet, String GenaueKoords,BlitzerWarner Addon){
+    return Component.text(Addon.configuration().prefix().get().toString(), TextColor.color(Addon.configuration().prefixColor().get())).decorate(
+        TextDecoration.BOLD)
+        .append(Component.text(" Blitzer in Reichweite von ", NamedTextColor.GRAY)).undecorate(TextDecoration.BOLD)
+        .append(Component.text(Reichweite + " Blöcken", NamedTextColor.DARK_GREEN))
+        .append(Component.text("\nKoordinaten: ", NamedTextColor.GRAY))
+        .append(Component.text(GenaueKoords, NamedTextColor.DARK_GREEN))
+        .append(Component.text("\nGebiet: ", NamedTextColor.GRAY))
+        .append(Component.text(Gebiet, NamedTextColor.DARK_GREEN))
+        .append(Component.text("\nGeschwindigkeit: ", NamedTextColor.GRAY))
+        .append(Component.text(Geschwindigkeit + "KM/H", NamedTextColor.DARK_GREEN));
   }
 
   public boolean isCoords(float x, float y, float z, int isX, int isY, int isZ){
@@ -122,3 +141,10 @@ public class BlitzerListener {
     return distanceSquared <= radiusSquared;
   }
 }
+
+// - Set a boolean on server join/leave if the user is on the server instead of checking it every time  X
+// - Do not use streams
+// - Reformat BlitzerWarner.Koords to contain a Object that holds all the information in different fields
+// - Use the GameTickEvent in either phase PRE or POST instead of ClientPlayerTurnEvent  X
+// - Do not use legacy color codes X
+// - Use Component.translatable (Guidelines #6) X

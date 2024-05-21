@@ -6,9 +6,11 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.KeybindWidget.KeyB
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
+import net.labymod.api.client.gui.screen.widget.widgets.input.color.ColorPickerWidget.ColorPickerSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
+import java.awt.*;
 
 @ConfigName("settings")
 public class BlitzerConfiguration extends AddonConfig {
@@ -16,11 +18,17 @@ public class BlitzerConfiguration extends AddonConfig {
   @SwitchSetting @SettingSection("Addon")
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
   @TextFieldSetting
-  private final ConfigProperty<String> prefix = new ConfigProperty<>("&0&lBlit&4&lzer Wa&e&lrner");
+  private final ConfigProperty<String> prefixText = new ConfigProperty<>("Blitzer Warner");
+  @ColorPickerSetting
+  private final ConfigProperty<Integer> prefixColor = new ConfigProperty<>(
+      new Color(4, 255, 235).getRGB());
+
   @TextFieldSetting
-  private final ConfigProperty<String> title = new ConfigProperty<>("&4");
-  @TextFieldSetting
-  private final ConfigProperty<String> subtitleColor = new ConfigProperty<>("&6");
+  private final ConfigProperty<Integer> title = new ConfigProperty<>(
+      new Color(255, 0, 0).getRGB());
+  @ColorPickerSetting
+  private final ConfigProperty<Integer> subtitleColor = new ConfigProperty<>(
+      new Color(245, 120, 66).getRGB());
   @SliderSetting(min = 0.0f, max = 2.0f, steps = 0.1f) @SettingSection("Ingame")
   private final ConfigProperty<Float> lautstaerke = new ConfigProperty<>(1f);
   @SliderSetting(min = 50, max = 200, steps = 1)
@@ -65,12 +73,15 @@ public class BlitzerConfiguration extends AddonConfig {
     return this.toggleBind;
   }
   public ConfigProperty<String> prefix(){
-    return this.prefix;
+    return this.prefixText;
   }
-  public ConfigProperty<String> title(){
+  public ConfigProperty<Integer> prefixColor(){
+    return this.prefixColor;
+  }
+  public ConfigProperty<Integer> title(){
     return this.title;
   }
-  public ConfigProperty<String> subtitleColor(){
+  public ConfigProperty<Integer> subtitleColor(){
     return this.subtitleColor;
   }
 

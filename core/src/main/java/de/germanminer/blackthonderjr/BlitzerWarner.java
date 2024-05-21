@@ -2,6 +2,9 @@ package de.germanminer.blackthonderjr;
 
 import de.germanminer.blackthonderjr.listener.BlitzerKeys;
 import net.labymod.api.addon.LabyAddon;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
+import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import de.germanminer.blackthonderjr.listener.BlitzerListener;
 import java.io.BufferedReader;
@@ -13,12 +16,15 @@ import java.util.List;
 
 @AddonMain
 public class BlitzerWarner extends LabyAddon<BlitzerConfiguration> {
-  public static String prefix;
+  public static Component prefix;
   public static List<String> Koords = new ArrayList<>();
+  public static boolean isOnline;
 
   @Override
   protected void enable() {
-    prefix = configuration().prefix().get().toString().replace("&", "§") + " ";
+    isOnline = true;
+    prefix = Component.text(this.configuration().prefix().get().toString(), TextColor.color(this.configuration().prefixColor().get())).decorate(
+        TextDecoration.BOLD);
     this.registerSettingCategory();
 
     this.registerListener(new BlitzerListener(this));
