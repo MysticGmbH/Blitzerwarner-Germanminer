@@ -79,7 +79,9 @@
       "textsubtitle": "Geschwindigkeit: %s km/h"
     },
     "keys": {
-      "message": " Die Benachrichtigungen wurden %s"
+      "message": " Die Benachrichtigungen wurden %s",
+      "active": "Aktiviert!",
+      "notactive": "Deaktiviert!"
     }
 
   }

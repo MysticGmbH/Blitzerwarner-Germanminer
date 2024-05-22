@@ -42,85 +42,75 @@ public class BlitzerListener {
   }
   @Subscribe
   public void onGameTick(GameTickEvent event) {
-      LabyAPI labyAPI = this.addon.labyAPI();
-      if (labyAPI.minecraft().isSingleplayer()) {
+    LabyAPI labyAPI = this.addon.labyAPI();
+    if (labyAPI.minecraft().isSingleplayer()) {
+      return;
+    }
+    if (BlitzerWarner.isOnline) {
+      ClientPlayer player = labyAPI.minecraft().getClientPlayer();
+      if (player == null) {
         return;
       }
-      if (BlitzerWarner.isOnline) {
-        ClientPlayer player = labyAPI.minecraft().getClientPlayer();
-        if (player == null) {
-          return;
+      boolean foundInRange = false;
+      Blitzer foundBlitzer = null;
+      for (Blitzer blitzer : BlitzerWarner.Koords) {
+        if (isWithinRadius(player.getPosX(), player.getPosY(), player.getPosZ(),
+            blitzer.getX(), blitzer.getY(), blitzer.getZ(),
+            addon.configuration().distanz().get())) {
+          foundInRange = true;
+          foundBlitzer = blitzer;
+          break;
         }
-        boolean foundInRange = false;
-        for (Blitzer blitzer : BlitzerWarner.Koords) {
-          if (isWithinRadius(player.getPosX(), player.getPosY(), player.getPosZ(),
-              blitzer.getX(), blitzer.getY(), blitzer.getZ(),
-              addon.configuration().distanz().get())) {
-            foundInRange = true;
-            break;
-          }
-        }
-
-        Blitzer foundBlitzer = null;
-        if (foundInRange && !isInRange) {
-          for (Blitzer blitzer : BlitzerWarner.Koords) {
-            if (isWithinRadius(player.getPosX(), player.getPosY(), player.getPosZ(),
-                blitzer.getX(), blitzer.getY(), blitzer.getZ(),
-                addon.configuration().distanz().get())) {
-              foundBlitzer = blitzer;
-              break;
-            }
-          }
-          if (foundBlitzer != null) {
-            if (player.getVehicle() != null) {
-              if (addon.configuration().all().get()) {
-                if (this.addon.configuration().text().get()) {
-                  String loc = foundBlitzer.getX() + " " + foundBlitzer.getY() + " "
-                      + foundBlitzer.getZ();
-                  this.addon.displayMessage(buildWarnMessage(addon.configuration().distanz().get(),
-                      foundBlitzer.getGeschwindigkeit(), foundBlitzer.getGebiet(),
-                      loc, addon));
-                }
-                if (this.addon.configuration().sound().get()) {
-                  labyAPI.minecraft().sounds()
-                      .playSound(ResourceLocation.create("minecraft", "block.note.bell"), 1f,
-                          addon.configuration().lautstaerke().get());
-                }
-                if (this.addon.configuration().screen().get()) {
-                  Title title = new Title(
-                      Component.text("Blitzer in Reichweite",
-                      TextColor.color(this.addon.configuration().title().get())),
-                      Component.text("Geschwindigkeit: " + foundBlitzer.getGeschwindigkeit() +" km/h",
-                      TextColor.color(this.addon.configuration().subtitleColor().get())),
-                      (int) (20 * addon.configuration().fadeIn().get()),
-                      (int) (20 * addon.configuration().stay().get()),
-                      (int) (20 * addon.configuration().fadeOut().get()));
-                  labyAPI.minecraft().showTitle(title);
-                }
-              }
-              hasWarned = true;
-            } else {
-              hasWarned = false;
-              isInRange = false;
-            }
-          }
-          if (player.getVehicle() != null) {
-            isInRange = true;
-          } else {
-            isInRange = false;
-          }
-        } else if (!foundInRange) {
-          isInRange = false;
-          hasWarned = false;
-        } else if (isInRange) {
-          if (player.getVehicle() == null) {
-            isInRange = false;
-          }
-        }
-
-
       }
+
+      if (foundInRange && !isInRange && foundBlitzer != null) {
+        if (player.getVehicle() != null) {
+          if (addon.configuration().all().get()) {
+            if (this.addon.configuration().text().get()) {
+              String loc = foundBlitzer.getX() + " " + foundBlitzer.getY() + " "
+                  + foundBlitzer.getZ();
+              this.addon.displayMessage(buildWarnMessage(addon.configuration().distanz().get(),
+                  foundBlitzer.getGeschwindigkeit(), foundBlitzer.getGebiet(),
+                  loc, addon));
+            }
+            if (this.addon.configuration().sound().get()) {
+              labyAPI.minecraft().sounds()
+                  .playSound(ResourceLocation.create("minecraft", "block.note.bell"), 1f,
+                      addon.configuration().lautstaerke().get());
+            }
+            if (this.addon.configuration().screen().get()) {
+              Title title = new Title(
+                  Component.text("Blitzer in Reichweite",
+                      TextColor.color(this.addon.configuration().title().get())),
+                  Component.text("Geschwindigkeit: " + foundBlitzer.getGeschwindigkeit() +" km/h",
+                      TextColor.color(this.addon.configuration().subtitleColor().get())),
+                  (int) (20 * addon.configuration().fadeIn().get()),
+                  (int) (20 * addon.configuration().stay().get()),
+                  (int) (20 * addon.configuration().fadeOut().get()));
+              labyAPI.minecraft().showTitle(title);
+            }
+          }
+          hasWarned = true;
+        } else {
+          hasWarned = false;
+          isInRange = false;
+        }
+        if (player.getVehicle() != null) {
+          isInRange = true;
+        } else {
+          isInRange = false;
+        }
+      } else if (!foundInRange) {
+        isInRange = false;
+        hasWarned = false;
+      } else if (isInRange) {
+        if (player.getVehicle() == null) {
+          isInRange = false;
+        }
+      }
+    }
   }
+
 
 
 
