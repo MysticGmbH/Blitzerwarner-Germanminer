@@ -5,15 +5,6 @@
       "enabled": {
         "name": "Addon Aktiviert"
       },
-      "sound": {
-        "name": "Sound"
-      },
-      "lautstaerke": {
-        "name": "Alarmtonlage"
-      },
-      "distanz": {
-        "name": "Meldungsdistanz"
-      },
       "header": {
         "Addon": {
           "name": "Addon Einstellungen"
@@ -25,44 +16,58 @@
           "name": "Hotkeys"
         },
         "Benachrichtigungstyp": {
-          "name": "Benachrichtigungstyp"
-        },
-        "Bildschirmbenachrichtigung": {
-          "name": "Bildschirmbenachrichtigung"
+          "name": "Benachrichtigungseinstellungen"
         }
       },
       "toggleBind": {
         "name": "Blitzer Umschalter"
       },
-      "prefixText":{
-        "name": "Prefix"
+      "sub": {
+        "name": "Alle Benachrichtigung",
+        "text": {
+          "name": "Text"
+        },
+        "screen": {
+          "name": "Bildschirm"
+        },
+        "sound": {
+          "name": "Sound"
+        }
       },
-      "prefixColor":{
-        "name": "Prefixfarbe"
+      "prefixSub": {
+        "name": "Prefix",
+        "prefixText":{
+          "name": "Prefix"
+        },
+        "prefixColor":{
+          "name": "Prefixfarbe"
+        },
+        "title": {
+          "name": "Maintitelfarbe"
+        },
+        "subtitleColor": {
+          "name": "Untertitelfarbe"
+        }
       },
-      "title": {
-        "name": "Maintitelfarbe"
-      },
-      "subtitleColor": {
-        "name": "Untertitelfarbe"
-      },
-      "text": {
-        "name": "Text"
-      },
-      "screen": {
-        "name": "Bildschirm"
-      },
-      "all": {
-        "name": "Alle Benachrichtigungen"
-      },
-      "fadeIn": {
-        "name": "Anzeige Einblendungszeit"
-      },
-      "stay": {
-        "name": "Anzeigezeit"
-      },
-      "fadeOut": {
-        "name": "Anzeige Ausblendungszeit"
+      "ingameSub": {
+        "name": "Meldungsdistanz",
+        "fadeIn": {
+          "name": "Anzeige Einblendungszeit"
+        },
+        "stay": {
+          "name": "Anzeigezeit"
+        },
+        "fadeOut": {
+          "name": "Anzeige Ausblendungszeit"
+        },
+        "lautstaerke": {
+          "name": "Alarmtonlage"
+        },
+        "header": {
+          "Bildschirmbenachrichtigung": {
+            "name": "Bildschirm Benachrichtigungs Einstellungen"
+          }
+        }
       }
     },
     "messages": {
@@ -72,7 +77,11 @@
       "text4builder": "\nGebiet: ",
       "text5builder": "\nGeschwindigkeit: ",
       "text6builder": "%s",
-      "text7builder": "%s KM/H"
+      "text7builder": "%s KM/H",
+      "sendsuccess": " Dieser Blitzer wurde eingereicht!",
+      "errornull": " Einer der Argumente ist leer!\nBenutze: /blitzerreport X Y Z GEBIET GESCHWINDIGKEIT",
+      "bmusage": " Benutze: /blitzerreport X Y Z GEBIET GESCHWINDIGKEIT",
+      "cooldownerror": " Sie müssen noch %s Sekunden warten, bervor sie diesen Befehl erneut verwenden können!"
     },
     "screen":{
       "texttitle": "Blitzer in Reichweite",
@@ -83,6 +92,5 @@
       "active": "Aktiviert!",
       "notactive": "Deaktiviert!"
     }
-
   }
 }

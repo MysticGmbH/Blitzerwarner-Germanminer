@@ -7,7 +7,7 @@ public class Blitzer {
   String gebiet;
   int geschwindigkeit;
 
-  Blitzer(int x, int y, int z, String gebiet, int geschwindigkeit) {
+  public Blitzer(int x, int y, int z, String gebiet, int geschwindigkeit) {
     this.x = x;
     this.y = y;
     this.z = z;
