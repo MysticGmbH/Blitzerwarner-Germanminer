@@ -1,6 +1,5 @@
 package de.germanminer.blackthonderjr.api;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import de.germanminer.blackthonderjr.Blitzer;
 import de.germanminer.blackthonderjr.BlitzerWarner;
@@ -13,14 +12,6 @@ import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.util.io.web.request.Request;
 import net.labymod.api.util.io.web.request.Request.Method;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class BlitzerAPI {
   public static Component buildWarnMessage(Integer Reichweite, Integer Geschwindigkeit, String Gebiet, String GenaueKoords, BlitzerWarner Addon){
@@ -35,7 +26,7 @@ public class BlitzerAPI {
         .append(Component.translatable("blitzerwarner.messages.text7builder", NamedTextColor.DARK_GREEN, Component.text(Geschwindigkeit)));
   }
 
-  public static void seeTitle(Blitzer foundBlitzer, BlitzerWarner addon){
+  /*public static void seeTitle(Blitzer foundBlitzer, BlitzerWarner addon){
     LabyAPI labyAPI = addon.labyAPI();
     Title title = new Title(
         Component.text("Blitzer in Reichweite",
@@ -46,8 +37,8 @@ public class BlitzerAPI {
         (int) (20 * addon.configuration().stay().get()),
         (int) (20 * addon.configuration().fadeOut().get()));
     labyAPI.minecraft().showTitle(title);
-  }
-  /*public static void seeTitle(Blitzer foundBlitzer, BlitzerWarner addon){
+  }*/
+  public static void seeTitle(Blitzer foundBlitzer, BlitzerWarner addon){
     LabyAPI labyAPI = addon.labyAPI();
     Title title = new Title(
         Component.translatable("blitzerwarner.screen.texttitle",
@@ -59,7 +50,7 @@ public class BlitzerAPI {
         (int) (20 * addon.configuration().stay().get()),
         (int) (20 * addon.configuration().fadeOut().get()));
     labyAPI.minecraft().showTitle(title);
-  }*/
+  }
 
   public static void playSound(BlitzerWarner addon){
     LabyAPI labyAPI = addon.labyAPI();

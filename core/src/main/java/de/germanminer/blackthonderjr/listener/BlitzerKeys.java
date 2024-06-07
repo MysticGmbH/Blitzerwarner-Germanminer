@@ -11,7 +11,6 @@ public class BlitzerKeys {
   public BlitzerKeys(BlitzerWarner addon) {
     this.addon = addon;
   }
-
   @Subscribe
   public void KeyEvent(KeyEvent e){
     if(!Laby.labyAPI().minecraft().minecraftWindow().isScreenOpened()){

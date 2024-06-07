@@ -26,7 +26,6 @@ public class BlitzerreportCMD extends Command {
         addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get()))
             .append(Component.translatable("blitzerwarner.messages.bmusage", NamedTextColor.RED)));
       }else if (arguments.length == 5) {
-
         UUID user = labyAPI.getUniqueId();
         if(cooldowns.containsKey(user)) {
           long secondsLeft = ((cooldowns.get(user)/1000)+60) - (System.currentTimeMillis()/1000);
@@ -36,7 +35,6 @@ public class BlitzerreportCMD extends Command {
           }
         }
         cooldowns.put(user, System.currentTimeMillis());
-
         if (arguments[0] != null && arguments[1] != null && arguments[2] != null
             && arguments[3] != null && arguments[4] != null) {
           Blitzer blitzer = new Blitzer(Integer.valueOf(arguments[0]),
@@ -51,7 +49,6 @@ public class BlitzerreportCMD extends Command {
         addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get()))
             .append(Component.translatable("blitzerwarner.messages.errornull", NamedTextColor.RED)));
       }
-
     }
     return true;
   }

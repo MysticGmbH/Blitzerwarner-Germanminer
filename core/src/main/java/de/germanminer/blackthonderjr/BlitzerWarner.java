@@ -32,6 +32,4 @@ public class BlitzerWarner extends LabyAddon<BlitzerMainCfg> {
   protected Class<BlitzerMainCfg> configurationClass() {
     return BlitzerMainCfg.class;
   }
-
-
 }

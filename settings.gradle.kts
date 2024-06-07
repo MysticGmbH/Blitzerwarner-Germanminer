@@ -1,4 +1,4 @@
-rootProject.name = "Blitzer Warner Germanminer"
+rootProject.name = "BlitzerWarnerGermanminer"
 
 pluginManagement {
     val labyGradlePluginVersion = "0.3.48"

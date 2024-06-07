@@ -71,7 +71,6 @@ public class BlitzerListener {
             if (this.addon.configuration().screen().get()) {
               BlitzerAPI.seeTitle(foundBlitzer, addon);
             }
-
           }
           hasWarned = true;
         } else {
