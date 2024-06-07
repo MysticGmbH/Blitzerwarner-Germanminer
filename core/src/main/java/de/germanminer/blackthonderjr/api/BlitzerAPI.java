@@ -14,8 +14,9 @@ import net.labymod.api.util.io.web.request.Request;
 import net.labymod.api.util.io.web.request.Request.Method;
 
 public class BlitzerAPI {
-  public static Component buildWarnMessage(Integer Reichweite, Integer Geschwindigkeit, String Gebiet, String GenaueKoords, BlitzerWarner Addon){
-    return Component.text(Addon.configuration().prefix().get().toString(), TextColor.color(Addon.configuration().prefixColor().get()))
+  public static Component buildWarnMessage(Integer Reichweite, Integer Geschwindigkeit, String Gebiet, String GenaueKoords, BlitzerWarner addon){
+    Component message = Component.text()
+        .append(addon.configuration().prefix())
         .append(Component.translatable("blitzerwarner.messages.text1builder", NamedTextColor.GRAY))
         .append(Component.translatable("blitzerwarner.messages.text2builder", NamedTextColor.DARK_GREEN, Component.text(Reichweite)))
         .append(Component.translatable("blitzerwarner.messages.text3builder", NamedTextColor.GRAY))
@@ -23,7 +24,11 @@ public class BlitzerAPI {
         .append(Component.translatable("blitzerwarner.messages.text4builder", NamedTextColor.GRAY))
         .append(Component.translatable("blitzerwarner.messages.text6builder", NamedTextColor.DARK_GREEN, Component.text(Gebiet)))
         .append(Component.translatable("blitzerwarner.messages.text5builder", NamedTextColor.GRAY))
-        .append(Component.translatable("blitzerwarner.messages.text7builder", NamedTextColor.DARK_GREEN, Component.text(Geschwindigkeit)));
+        .append(Component.translatable("blitzerwarner.messages.text7builder", NamedTextColor.DARK_GREEN, Component.text(Geschwindigkeit)))
+        .build();
+
+
+    return message;
   }
 
   /*public static void seeTitle(Blitzer foundBlitzer, BlitzerWarner addon){
@@ -95,13 +100,21 @@ public class BlitzerAPI {
         }));
   }
   public static void toggleNotification(BlitzerWarner addon){
-    String soundStatus = addon.configuration().all().get().toString();
-    addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get())).append(Component.translatable("blitzerwarner.keys.message", NamedTextColor.GRAY, (soundStatus.equals("true") ? Component.translatable("blitzerwarner.keys.notactive",
-        NamedTextColor.RED) : Component.translatable("blitzerwarner.keys.active", NamedTextColor.GREEN)))));
-    addon.configuration().all().set(!addon.configuration().all().get());
+    Boolean soundStatus = addon.configuration().all().get();
+    Component message = Component.text()
+        .append(addon.configuration().prefix())
+        .append(
+            Component.translatable("blitzerwarner.keys.message",
+                NamedTextColor.GRAY,
+                soundStatus.equals(true) ? Component.translatable("blitzerwarner.keys.notactive", NamedTextColor.RED) : Component.translatable("blitzerwarner.keys.active", NamedTextColor.GREEN))
+        )
+        .build();
+    addon.configuration().all().set(!soundStatus);
     addon.labyAPI().minecraft().sounds()
         .playSound(ResourceLocation.create("minecraft", "block.note.bell"), 1f,
             addon.configuration().lautstaerke().get());
+    addon.displayMessage(message);
+
   }
 
   public static void sendBlitzer(Blitzer blitzer, BlitzerWarner addon) {
@@ -118,8 +131,12 @@ public class BlitzerAPI {
         .handleErrorStream()
         .json(data)
         .execute((jsonObjectResponse -> {
-          addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get()))
-              .append(Component.translatable("blitzerwarner.messages.sendsuccess", NamedTextColor.GREEN)));
+          Component message = Component.text()
+              .append(addon.configuration().prefix())
+              .append(Component.translatable("blitzerwarner.messages.sendsuccess", NamedTextColor.GREEN))
+              .build();
+          addon.displayMessage(message);
+
         }));
   }
 }

@@ -6,7 +6,6 @@ import de.germanminer.blackthonderjr.api.BlitzerAPI;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.component.format.TextColor;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -23,14 +22,19 @@ public class BlitzerreportCMD extends Command {
   public boolean execute(String prefix, String[] arguments) {
     if (prefix.equalsIgnoreCase("Blitzerreport")) {
       if(arguments.length == 0){
-        addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get()))
+        addon.displayMessage(addon.configuration().prefix()
             .append(Component.translatable("blitzerwarner.messages.bmusage", NamedTextColor.RED)));
       }else if (arguments.length == 5) {
         UUID user = labyAPI.getUniqueId();
         if(cooldowns.containsKey(user)) {
           long secondsLeft = ((cooldowns.get(user)/1000)+60) - (System.currentTimeMillis()/1000);
           if(secondsLeft>0) {
-            addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get())).append(Component.translatable("blitzerwarner.messages.cooldownerror", NamedTextColor.RED, Component.text(secondsLeft))));
+            Component cooldownerror = Component.text()
+                .append(addon.configuration().prefix())
+                .append(Component.translatable("blitzerwarner.messages.cooldownerror", NamedTextColor.RED, Component.text(secondsLeft)))
+                .build();
+
+            addon.displayMessage(cooldownerror);
             return true;
           }
         }
@@ -42,12 +46,21 @@ public class BlitzerreportCMD extends Command {
               Integer.valueOf(arguments[4]));
           BlitzerAPI.sendBlitzer(blitzer, addon);
         } else {
-          addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get()))
-              .append(Component.translatable("blitzerwarner.messages.errornull", NamedTextColor.RED)));
+          Component errornull = Component.text()
+              .append(addon.configuration().prefix())
+              .append(Component.translatable("blitzerwarner.messages.errornull", NamedTextColor.RED))
+              .build();
+
+          addon.displayMessage(errornull);
         }
       } else {
-        addon.displayMessage(Component.text(addon.configuration().prefix().get().toString(), TextColor.color(addon.configuration().prefixColor().get()))
-            .append(Component.translatable("blitzerwarner.messages.errornull", NamedTextColor.RED)));
+        Component errornull = Component.text()
+            .append(addon.configuration().prefix())
+            .append(Component.translatable("blitzerwarner.messages.errornull", NamedTextColor.RED))
+            .build();
+
+        addon.displayMessage(errornull);
+
       }
     }
     return true;

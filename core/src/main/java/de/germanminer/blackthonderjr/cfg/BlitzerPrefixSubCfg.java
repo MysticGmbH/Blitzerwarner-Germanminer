@@ -1,5 +1,7 @@
 package de.germanminer.blackthonderjr.cfg;
 
+import net.labymod.api.Laby;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.color.ColorPickerWidget.ColorPickerSetting;
 import net.labymod.api.configuration.loader.Config;
@@ -12,13 +14,12 @@ import java.awt.*;
 @ConfigName("settings")
 @SpriteTexture("settings.png")
 public class BlitzerPrefixSubCfg extends Config {
+  private Component prefix = Component.text(Laby.references().componentMapper().translateColorCodes("&0&lBlit&4&lzer Wa&e&lrner"));
+
   @ShowSettingInParent
   @TextFieldSetting
-  private final ConfigProperty<String> prefixText = new ConfigProperty<>("Blitzer Warner");
-
-  @ColorPickerSetting
-  private final ConfigProperty<Integer> prefixColor = new ConfigProperty<>(
-      new Color(255, 229, 0).getRGB());
+  private ConfigProperty<String> prefixSetting = new ConfigProperty<>("&0&lBlit&4&lzer Wa&e&lrner")
+      .addChangeListener(s -> prefix = Component.text(Laby.references().componentMapper().translateColorCodes(s)));
 
   @ColorPickerSetting
   private final ConfigProperty<Integer> title = new ConfigProperty<>(
@@ -29,11 +30,8 @@ public class BlitzerPrefixSubCfg extends Config {
       new Color(229, 126,0).getRGB());
 
 
-  public ConfigProperty<String> prefix(){
-    return this.prefixText;
-  }
-  public ConfigProperty<Integer> prefixColor(){
-    return this.prefixColor;
+  public Component prefix() {
+    return this.prefix;
   }
   public ConfigProperty<Integer> title(){
     return this.title;

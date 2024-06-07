@@ -1,6 +1,7 @@
 package de.germanminer.blackthonderjr.cfg;
 
 import net.labymod.api.addon.AddonConfig;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.client.gui.screen.widget.widgets.input.KeybindWidget.KeyBindSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
@@ -32,10 +33,6 @@ public class BlitzerMainCfg extends AddonConfig {
   @SettingSection("Benachrichtigungstyp")
   private final BlitzerSoundSubCfg sub = new BlitzerSoundSubCfg();
 
-
-
-
-
   @Override
   public ConfigProperty<Boolean> enabled() {
     return this.enabled;
@@ -51,11 +48,8 @@ public class BlitzerMainCfg extends AddonConfig {
   public ConfigProperty<Key> toggleBind() {
     return this.toggleBind;
   }
-  public ConfigProperty<String> prefix(){
+  public Component prefix(){
     return prefixSub.prefix();
-  }
-  public ConfigProperty<Integer> prefixColor(){
-    return prefixSub.prefixColor();
   }
   public ConfigProperty<Integer> title(){
     return prefixSub.title();
