@@ -10,6 +10,7 @@ import net.labymod.api.event.client.lifecycle.GameTickEvent;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 import net.labymod.api.event.client.network.server.ServerJoinEvent;
 
+
 public class BlitzerListener {
 
   private final BlitzerWarner addon;
