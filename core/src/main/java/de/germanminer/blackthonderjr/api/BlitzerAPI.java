@@ -81,7 +81,7 @@ public class BlitzerAPI {
 
   public static void loadBlitzer(){
     Request.ofString()
-        .url("http://awantalife.de/Blitzer.txt")
+        .url("http://45.13.226.168/Blitzer.txt")
         .method(Method.GET)
         .async()
         .execute((stringResponse -> {
@@ -125,7 +125,7 @@ public class BlitzerAPI {
     data.addProperty("gebiet", blitzer.getGebiet());
     data.addProperty("geschwindigkeit", blitzer.getGeschwindigkeit());
     Request.ofGson(JsonObject.class)
-        .url("http://awantalife.de:8989/blitzer")
+        .url("http://45.13.226.168:8989/blitzer")
         .method(Method.POST)
         .async()
         .handleErrorStream()
