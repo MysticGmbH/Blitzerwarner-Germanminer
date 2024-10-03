@@ -31,18 +31,6 @@ public class BlitzerAPI {
     return message;
   }
 
-  /*public static void seeTitle(Blitzer foundBlitzer, BlitzerWarner addon){
-    LabyAPI labyAPI = addon.labyAPI();
-    Title title = new Title(
-        Component.text("Blitzer in Reichweite",
-            TextColor.color(addon.configuration().title().get())),
-        Component.text("Geschwindigkeit " + foundBlitzer.getGeschwindigkeit() + " km/h",
-            TextColor.color(addon.configuration().subtitleColor().get())),
-        (int) (20 * addon.configuration().fadeIn().get()),
-        (int) (20 * addon.configuration().stay().get()),
-        (int) (20 * addon.configuration().fadeOut().get()));
-    labyAPI.minecraft().showTitle(title);
-  }*/
   public static void seeTitle(Blitzer foundBlitzer, BlitzerWarner addon){
     LabyAPI labyAPI = addon.labyAPI();
     Title title = new Title(
