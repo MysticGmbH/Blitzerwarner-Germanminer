@@ -1,5 +1,15 @@
 {
   "blitzerwarner": {
+    "gui": {
+      "navi": {
+        "title": "Navigation"
+      }
+    },
+    "hudWidget":{
+      "naviort": {
+        "name": "Navigations Ort"
+      }
+    },
     "settings": {
       "name": "Blitzerwarner",
       "enabled": {
@@ -78,6 +88,18 @@
       "text5builder": "\nGeschwindigkeit: ",
       "text6builder": "%s",
       "text7builder": "%s KM/H",
+      "sendsuccess": " Dieser Blitzer wurde eingereicht!",
+      "errornull": " Einer der Argumente ist leer!\nBenutze: /blitzerreport X Y Z GEBIET GESCHWINDIGKEIT",
+      "bmusage": " Benutze: /blitzerreport X Y Z GEBIET GESCHWINDIGKEIT",
+      "cooldownerror": " Sie müssen noch %s Sekunden warten, bervor sie diesen Befehl erneut verwenden können!"
+    },
+    "messagesnavi": {
+      "text1builder": " Neues Navigationsziel Festgelegt!\n",
+      "text2builder": "Blöcke: ",
+      "text3builder": "\nKoordinaten: ",
+      "text4builder": "\nGebiet: ",
+      "text5builder": "%s",
+      "text6builder": "\nZiel: ",
       "sendsuccess": " Dieser Blitzer wurde eingereicht!",
       "errornull": " Einer der Argumente ist leer!\nBenutze: /blitzerreport X Y Z GEBIET GESCHWINDIGKEIT",
       "bmusage": " Benutze: /blitzerreport X Y Z GEBIET GESCHWINDIGKEIT",

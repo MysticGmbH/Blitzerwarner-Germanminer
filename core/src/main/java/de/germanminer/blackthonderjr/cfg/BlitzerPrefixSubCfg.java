@@ -14,11 +14,11 @@ import java.awt.*;
 @ConfigName("settings")
 @SpriteTexture("settings.png")
 public class BlitzerPrefixSubCfg extends Config {
-  private Component prefix = Component.text(Laby.references().componentMapper().translateColorCodes("&0&lBlit&4&lzer Wa&e&lrner"));
+  private Component prefix = Component.text(Laby.references().componentMapper().translateColorCodes("&0&lGM-&4&lUti&e&lls"));
 
   @ShowSettingInParent
   @TextFieldSetting
-  private ConfigProperty<String> prefixSetting = new ConfigProperty<>("&0&lBlit&4&lzer Wa&e&lrner")
+  private ConfigProperty<String> prefixSetting = new ConfigProperty<>("&0&lGM-&4&lUti&e&lls")
       .addChangeListener(s -> prefix = Component.text(Laby.references().componentMapper().translateColorCodes(s)));
 
   @ColorPickerSetting

@@ -3,6 +3,7 @@ package de.germanminer.blackthonderjr.listener;
 import de.germanminer.blackthonderjr.Blitzer;
 import de.germanminer.blackthonderjr.BlitzerWarner;
 import de.germanminer.blackthonderjr.api.BlitzerAPI;
+import de.germanminer.blackthonderjr.widgets.NaviOrtWidget;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.event.Subscribe;
@@ -15,16 +16,19 @@ public class BlitzerListener {
 
   private final BlitzerWarner addon;
   public static boolean isInRange;
+  public static NaviOrtWidget naviOrtWidget;
   private boolean hasWarned = false;
 
-  public BlitzerListener(BlitzerWarner addon) {
+  public BlitzerListener(BlitzerWarner addon, NaviOrtWidget naviOrtWidget) {
     this.addon = addon;
+    this.naviOrtWidget = naviOrtWidget;
   }
   @Subscribe
   public void onJoin(ServerJoinEvent e){
     if(e.serverData().address().toString().equalsIgnoreCase("germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("mc.germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("localhost")){
       BlitzerWarner.Koords.clear();
       BlitzerAPI.loadBlitzer();
+      naviOrtWidget.RS_TIME.setVisible(true);
       BlitzerWarner.isOnline = true;
       isInRange = false;
     }
