@@ -4,8 +4,6 @@ import de.germanminer.blackthonderjr.BlitzerWarner;
 import de.germanminer.blackthonderjr.api.BlitzerAPI;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.component.format.TextColor;
-import org.jetbrains.annotations.NotNull;
 
 public class ReloadCMD extends Command {
   private BlitzerWarner addon;

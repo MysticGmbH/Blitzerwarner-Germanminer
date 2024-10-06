@@ -8,6 +8,9 @@
     "hudWidget":{
       "naviort": {
         "name": "Navigations Ort"
+      },
+      "rstimer": {
+        "name": "Respawnschutz"
       }
     },
     "settings": {

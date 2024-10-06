@@ -28,7 +28,7 @@ public class BlitzerListener {
     if(e.serverData().address().toString().equalsIgnoreCase("germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("mc.germanminer.de") || e.serverData().address().toString().equalsIgnoreCase("localhost")){
       BlitzerWarner.Koords.clear();
       BlitzerAPI.loadBlitzer();
-      naviOrtWidget.RS_TIME.setVisible(true);
+      naviOrtWidget.NAVI_TEXT.setVisible(true);
       BlitzerWarner.isOnline = true;
       isInRange = false;
     }

@@ -11,7 +11,6 @@ import java.util.UUID;
 public class TestCMD extends Command {
   public final BlitzerWarner addon;
   public NaviOrtWidget naviOrtWidget;
-  private final HashMap<UUID, Long> cooldowns = new HashMap<>();
 
   public TestCMD(BlitzerWarner addon, NaviOrtWidget naviOrtWidget) {
     super("TestNavi");
@@ -23,7 +22,7 @@ public class TestCMD extends Command {
     if (prefix.equalsIgnoreCase("TestNavi")) {
       Navigation navigation = BlitzerWarner.LastNaviLoc;
       addon.displayMessage(BlitzerAPI.buildNaviMessage(0, navigation.getGebiet(), navigation.getX() + " " + navigation.getY() + " " + navigation.getZ(), navigation.getName().replace("_", " "), addon, navigation));
-      naviOrtWidget.RS_TIME.updateAndFlush(navigation.getName());
+      naviOrtWidget.NAVI_TEXT.updateAndFlush(navigation.getName());
     }
     return true;
   }
